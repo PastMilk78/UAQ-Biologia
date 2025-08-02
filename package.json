@@ -1,0 +1,40 @@
+{
+  "name": "historia-biologia-uaq",
+  "version": "1.0.0",
+  "description": "Historia documentada de la creación de la Licenciatura en Biología - UAQ",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export"
+  },
+      "dependencies": {
+      "next": "14.2.18",
+      "react": "18.2.0",
+      "react-dom": "18.2.0",
+      "framer-motion": "^10.16.0"
+    },
+    "devDependencies": {
+      "@types/node": "20.8.0",
+      "@types/react": "18.2.0",
+      "@types/react-dom": "18.2.0",
+      "eslint": "8.51.0",
+      "eslint-config-next": "14.2.18",
+      "typescript": "5.2.0",
+      "autoprefixer": "^10.4.16",
+      "postcss": "^8.4.31",
+      "tailwindcss": "^3.3.5"
+    },
+  "keywords": [
+    "UAQ",
+    "Biología",
+    "Historia",
+    "Universidad Autónoma de Querétaro",
+    "Libro Digital",
+    "Interactivo"
+  ],
+  "author": "Dr. Carlos Isaac Silva Barrón",
+  "license": "MIT"
+}
