@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import '@/styles/globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ChatBot from '@/components/ChatBot';
 import { bookData } from '@/data/bookContent';
 
 const inter = Inter({ 
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
         </main>
         
+        <ChatBot />
         <Footer />
         
         {/* Script para ocultar header en portada */}
