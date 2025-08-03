@@ -1,286 +1,489 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 
 export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const cardRef = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return
-    
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    
-    const rotateX = (y - centerY) / centerY * -10
-    const rotateY = (x - centerX) / centerX * 10
-    
-    setMousePosition({ x: rotateY, y: rotateX })
-  }
-
-  const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 })
-  }
-
   return (
     <>
       <style jsx global>{`
-        @import url('https://fonts.gstatic.com/s/bodonimoda/v20/aFT67PyzsOwC2RKJ9pJD4GCnFxBAVjJ4P0U.woff2');
-        @import url('https://fonts.gstatic.com/s/madefor/v2/A_d94a_iWqo7LZhOC72ZW9I.woff2');
-        @import url('https://fonts.gstatic.com/s/dinnext/v2/R70djykVROCDTmd5KTgJ.woff2');
+        @font-face {
+          font-family: 'madefor-display-bold';
+          src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/4e7dc8d2-4b92-4c8f-8fd8-9de80a0b4b9e.woff2') format('woff2');
+          font-display: swap;
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        @font-face {
+          font-family: 'helveticaneuew01-65medi';
+          src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/b1ca5d6e-d19b-4f2c-84d2-ef17e6fa7f6e.woff2') format('woff2');
+          font-display: swap;
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
 
         @font-face {
           font-family: 'bodoni-moda';
-          src: url('https://fonts.gstatic.com/s/bodonimoda/v20/aFT67PyzsOwC2RKJ9pJD4GCnFxBAVjJ4P0U.woff2') format('woff2');
+          src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/1e7a9b6c-8d2f-4a3e-9b5c-7f6e8d9a0b1c.woff2') format('woff2');
           font-display: swap;
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
-        @font-face {
-          font-family: 'helveticaneuew01-65medi';
-          src: url('https://fonts.gstatic.com/s/helveticaneuew01-65medi/v1/jb27oJwCc1wBaGd_9KkS4DVZJnBX5EJNbdI') format('woff2');
-          font-display: swap;
-        }
+
         @font-face {
           font-family: 'din-next-w01-light';
-          src: url('https://fonts.gstatic.com/s/dinnext/v2/R70djykVROCDTmd5KTgJ.woff2') format('woff2');
+          src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/5c8a7d9e-6f4b-4e2a-8d3c-9b6e5f8a7c4d.woff2') format('woff2');
           font-display: swap;
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
+
         @font-face {
           font-family: 'wix-madefor-text-v2';
-          src: url('https://fonts.gstatic.com/s/madefor/v2/A_d94a_iWqo7LZhOC72ZW9I.woff2') format('woff2');
+          src: url('https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/8e6d4b9f-7c5a-4e9b-8f6c-7d5e9a8b6c4f.woff2') format('woff2');
           font-display: swap;
-        }
-
-        .shield {
-          width: 80px;
-          height: 100px;
-          background: linear-gradient(145deg, #1E40AF, #3B82F6);
-          border-radius: 10px 10px 50% 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-weight: bold;
-          font-size: 24px;
-          box-shadow: 0 8px 16px rgba(30, 64, 175, 0.3);
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-        
-        .shield:hover {
-          transform: translateZ(30px) scale(1.1) rotateY(10deg) !important;
-          box-shadow: 0 12px 24px rgba(30, 64, 175, 0.5);
-        }
-
-        @keyframes rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
       `}</style>
 
-      <main 
-        className="min-h-screen flex items-center justify-center p-5" 
-        style={{ 
-          background: 'linear-gradient(135deg, #080A0B 0%, #1A1E22 50%, #2D3339 100%)',
-          fontFamily: 'wix-madefor-text-v2, sans-serif'
-        }}
-      >
-        <div
-          ref={cardRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            borderRadius: '20px',
-            padding: '60px 80px',
-            maxWidth: '800px',
-            width: '100%',
-            textAlign: 'center',
-            boxShadow: `0 30px 60px rgba(0, 0, 0, 0.3), 
-                        0 10px 20px rgba(0, 0, 0, 0.2),
-                        inset 0 0 0 1px rgba(255, 255, 255, 0.1)`,
-            backdropFilter: 'blur(10px)',
-            transformStyle: 'preserve-3d',
-            transition: 'all 0.3s ease',
-            position: 'relative',
-            overflow: 'hidden',
-            transform: `perspective(1000px) rotateX(${mousePosition.y}deg) rotateY(${mousePosition.x}deg) translateZ(10px)`
-          }}
-        >
-          {/* Shields Container */}
+      <div style={{ 
+        minHeight: '100vh',
+        background: '#ffffff',
+        position: 'relative',
+        fontFamily: 'wix-madefor-text-v2, sans-serif'
+      }}>
+        {/* Header */}
+        <header style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '80px',
+          background: 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(10px)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 40px',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
+        }}>
           <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '40px',
-            position: 'relative',
-            zIndex: 2
+            fontFamily: 'madefor-display-bold, sans-serif',
+            fontSize: '24px',
+            fontWeight: 700,
+            color: '#2563eb'
           }}>
-            <div className="shield" style={{ transform: 'translateZ(20px)' }}>🏛️</div>
-            <div className="shield" style={{ transform: 'translateZ(20px)' }}>🔬</div>
+            Facultad de Biología UAQ
           </div>
+          <nav style={{ display: 'flex', gap: '30px' }}>
+            <a href="#inicio" style={{
+              fontFamily: 'helveticaneuew01-65medi, sans-serif',
+              fontSize: '16px',
+              color: '#374151',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              transition: 'all 0.3s ease'
+            }}>Inicio</a>
+            <a href="#investigacion" style={{
+              fontFamily: 'helveticaneuew01-65medi, sans-serif',
+              fontSize: '16px',
+              color: '#374151',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              transition: 'all 0.3s ease'
+            }}>Investigación</a>
+            <a href="#programas" style={{
+              fontFamily: 'helveticaneuew01-65medi, sans-serif',
+              fontSize: '16px',
+              color: '#374151',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              transition: 'all 0.3s ease'
+            }}>Programas</a>
+            <a href="#contacto" style={{
+              fontFamily: 'helveticaneuew01-65medi, sans-serif',
+              fontSize: '16px',
+              color: '#374151',
+              textDecoration: 'none',
+              padding: '8px 16px',
+              borderRadius: '4px',
+              transition: 'all 0.3s ease'
+            }}>Contacto</a>
+          </nav>
+        </header>
 
-          {/* Title */}
+        {/* Hero Section */}
+        <section style={{
+          marginTop: '80px',
+          padding: '60px 40px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          maxWidth: '1200px',
+          marginLeft: 'auto',
+          marginRight: 'auto'
+        }}>
           <h1 style={{
             fontFamily: 'bodoni-moda, serif',
-            fontSize: '48px',
+            fontSize: '72px',
             fontWeight: 700,
-            color: '#1E40AF',
+            color: '#1f2937',
+            lineHeight: 1.1,
             margin: '0 0 20px 0',
-            lineHeight: 1.2,
-            transform: 'translateZ(15px)',
-            transition: 'all 0.3s ease'
+            letterSpacing: '-0.02em'
           }}>
             Fauna de las Islas Marías
           </h1>
 
-          {/* Subtitle */}
           <h2 style={{
             fontFamily: 'helveticaneuew01-65medi, sans-serif',
-            fontSize: '24px',
+            fontSize: '28px',
+            fontWeight: 500,
             color: '#059669',
             margin: '0 0 40px 0',
-            fontWeight: 500,
-            transform: 'translateZ(10px)',
-            transition: 'all 0.3s ease'
+            lineHeight: 1.3
           }}>
-            Una Exploración Digital
+            Biodiversidad y Conservación Marina
           </h2>
 
-          {/* Central Illustration */}
-          <div style={{
-            width: '300px',
-            height: '300px',
-            margin: '0 auto 40px',
-            background: 'radial-gradient(circle, #E0F2FE 0%, #BAE6FD 50%, #7DD3FC 100%)',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative',
-            boxShadow: '0 20px 40px rgba(125, 211, 252, 0.3)',
-            transform: 'translateZ(25px)',
-            transition: 'all 0.3s ease',
-            overflow: 'hidden'
+          <p style={{
+            fontFamily: 'din-next-w01-light, sans-serif',
+            fontSize: '20px',
+            fontWeight: 300,
+            color: '#6b7280',
+            maxWidth: '600px',
+            lineHeight: 1.6,
+            margin: '0 0 60px 0'
           }}>
-            {/* Rotating background effect */}
+            Explora la extraordinaria biodiversidad del archipiélago de las Islas Marías, un ecosistema único en el Océano Pacífico mexicano, hogar de especies endémicas y un laboratorio natural para la investigación científica.
+          </p>
+
+          <Link 
+            href="/indice"
+            style={{
+              display: 'inline-block',
+              background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+              color: 'white',
+              padding: '16px 40px',
+              borderRadius: '12px',
+              fontFamily: 'helveticaneuew01-65medi, sans-serif',
+              fontSize: '18px',
+              fontWeight: 600,
+              textDecoration: 'none',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 8px 24px rgba(37, 99, 235, 0.3)'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 12px 32px rgba(37, 99, 235, 0.4)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0px)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(37, 99, 235, 0.3)'
+            }}
+          >
+            Explorar Investigación
+          </Link>
+        </section>
+
+        {/* Features Section */}
+        <section style={{
+          padding: '100px 40px',
+          background: '#f8fafc'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '40px'
+          }}>
             <div style={{
-              position: 'absolute',
-              top: '-50%',
-              left: '-50%',
-              width: '200%',
-              height: '200%',
-              background: 'conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
-              animation: 'rotate 10s linear infinite'
-            }} />
-            
-            <div style={{ position: 'relative', zIndex: 2 }}>
+              background: 'white',
+              padding: '40px',
+              borderRadius: '16px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+              transition: 'all 0.3s ease',
+              border: '1px solid rgba(0, 0, 0, 0.05)'
+            }}>
               <div style={{
-                fontSize: '80px',
-                marginBottom: '20px',
-                filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1))',
-                transition: 'all 0.3s ease'
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                color: 'white',
+                marginBottom: '24px'
               }}>
                 🏝️
               </div>
-              
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-                gap: '15px',
-                marginTop: '20px'
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '24px',
+                fontWeight: 600,
+                color: '#1f2937',
+                margin: '0 0 16px 0'
               }}>
-                {['🦎', '🐛', '🦋', '🐍', '🌺', '🌿', '🦗', '🐢'].map((emoji, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      fontSize: '32px',
-                      transition: 'all 0.3s ease',
-                      cursor: 'pointer',
-                      transform: 'translateZ(5px)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateZ(15px) scale(1.4) rotate(15deg)'
-                      e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3))'
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateZ(5px) scale(1) rotate(0deg)'
-                      e.currentTarget.style.filter = 'none'
-                    }}
-                  >
-                    {emoji}
-                  </span>
-                ))}
+                Ecosistemas Insulares
+              </h3>
+              <p style={{
+                fontFamily: 'din-next-w01-light, sans-serif',
+                fontSize: '16px',
+                fontWeight: 300,
+                color: '#6b7280',
+                lineHeight: 1.6,
+                margin: 0
+              }}>
+                Estudio de los ecosistemas únicos de las cuatro islas principales: María Madre, María Magdalena, María Cleofas y San Juanito.
+              </p>
+            </div>
+
+            <div style={{
+              background: 'white',
+              padding: '40px',
+              borderRadius: '16px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+              transition: 'all 0.3s ease',
+              border: '1px solid rgba(0, 0, 0, 0.05)'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                color: 'white',
+                marginBottom: '24px'
+              }}>
+                🐢
               </div>
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '24px',
+                fontWeight: 600,
+                color: '#1f2937',
+                margin: '0 0 16px 0'
+              }}>
+                Especies Endémicas
+              </h3>
+              <p style={{
+                fontFamily: 'din-next-w01-light, sans-serif',
+                fontSize: '16px',
+                fontWeight: 300,
+                color: '#6b7280',
+                lineHeight: 1.6,
+                margin: 0
+              }}>
+                Investigación de la fauna endémica incluyendo reptiles, aves marinas y especies de importancia ecológica.
+              </p>
+            </div>
+
+            <div style={{
+              background: 'white',
+              padding: '40px',
+              borderRadius: '16px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+              transition: 'all 0.3s ease',
+              border: '1px solid rgba(0, 0, 0, 0.05)'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px',
+                color: 'white',
+                marginBottom: '24px'
+              }}>
+                🔬
+              </div>
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '24px',
+                fontWeight: 600,
+                color: '#1f2937',
+                margin: '0 0 16px 0'
+              }}>
+                Investigación Científica
+              </h3>
+              <p style={{
+                fontFamily: 'din-next-w01-light, sans-serif',
+                fontSize: '16px',
+                fontWeight: 300,
+                color: '#6b7280',
+                lineHeight: 1.6,
+                margin: 0
+              }}>
+                Metodologías avanzadas de investigación marina y conservación de ecosistemas insulares tropicales.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer style={{
+          background: '#1f2937',
+          padding: '60px 40px 40px',
+          color: 'white'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '40px'
+          }}>
+            <div>
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '18px',
+                fontWeight: 600,
+                margin: '0 0 20px 0',
+                color: 'white'
+              }}>
+                Universidad
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Universidad Autónoma de Querétaro</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Facultad de Ciencias Naturales</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Departamento de Biología</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '18px',
+                fontWeight: 600,
+                margin: '0 0 20px 0',
+                color: 'white'
+              }}>
+                Investigación
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Proyectos Activos</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Publicaciones</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Colaboraciones</a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 style={{
+                fontFamily: 'helveticaneuew01-65medi, sans-serif',
+                fontSize: '18px',
+                fontWeight: 600,
+                margin: '0 0 20px 0',
+                color: 'white'
+              }}>
+                Contacto
+              </h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Dirección</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Teléfono</a>
+                </li>
+                <li style={{ marginBottom: '12px' }}>
+                  <a href="#" style={{
+                    fontFamily: 'din-next-w01-light, sans-serif',
+                    fontSize: '14px',
+                    color: '#9ca3af',
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease'
+                  }}>Email</a>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Author */}
-          <p style={{
-            fontFamily: 'din-next-w01-light, sans-serif',
-            fontSize: '18px',
-            color: '#6B7280',
-            fontWeight: 300,
-            transform: 'translateZ(5px)',
-            transition: 'all 0.3s ease',
-            marginBottom: '40px'
-          }}>
-            Facultad de Ciencias Naturales - UAQ
-          </p>
-
-          {/* Navigation Link */}
-          <div style={{ transform: 'translateZ(15px)' }}>
-            <Link 
-              href="/indice"
-              style={{
-                display: 'inline-block',
-                background: 'linear-gradient(145deg, #1E40AF, #3B82F6)',
-                color: 'white',
-                padding: '12px 32px',
-                borderRadius: '8px',
-                fontWeight: 600,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 8px rgba(30, 64, 175, 0.3)',
-                fontSize: '16px'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 6px 12px rgba(30, 64, 175, 0.4)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0px)'
-                e.currentTarget.style.boxShadow = '0 4px 8px rgba(30, 64, 175, 0.3)'
-              }}
-            >
-              Explorar Islas
-            </Link>
-          </div>
-
-          {/* UAQ Logo */}
           <div style={{
-            position: 'absolute',
-            bottom: '20px',
-            right: '20px',
-            width: '60px',
-            height: '60px',
-            opacity: 0.1,
-            transform: 'translateZ(1px)',
-            fontSize: '48px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            marginTop: '40px',
+            paddingTop: '20px',
+            borderTop: '1px solid #374151',
+            textAlign: 'center'
           }}>
-            🎓
+            <p style={{
+              fontFamily: 'din-next-w01-light, sans-serif',
+              fontSize: '14px',
+              color: '#9ca3af',
+              margin: 0
+            }}>
+              &copy; 2024 Facultad de Biología UAQ. Todos los derechos reservados.
+            </p>
           </div>
-        </div>
-      </main>
+        </footer>
+      </div>
     </>
   )
 }
