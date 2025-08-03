@@ -1,136 +1,241 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { bookData } from '@/data/bookContent';
-import IslandCard from '@/components/IslandCard';
-// Icons replaced with emojis for compatibility
+
+const FloatingIsland = ({ island, position, delay }: { island: any, position: string, delay: number }) => {
+  const islandElements = {
+    'primer-anio': {
+      animals: ['🦁', '🦒', '🐘', '🐊'],
+      plants: ['🌳', '🌿', '🍃'],
+      bg: 'from-green-600 to-green-800',
+      title: 'PRIMER AÑO'
+    },
+    'segundo-anio': {
+      animals: ['🌸', '🌺', '🌻', '🌹'],
+      plants: ['🌱', '🌿', '🍀'],
+      bg: 'from-pink-500 to-rose-600',
+      title: 'SEGUNDO AÑO'
+    },
+    'tercer-anio': {
+      animals: ['🍄', '🟫', '🌰', '🟤'],
+      plants: ['🌾', '🌿', '🍂'],
+      bg: 'from-amber-600 to-orange-700',
+      title: 'TERCER AÑO'
+    },
+    'cuarto-anio': {
+      animals: ['🦠', '🔬', '⚗️', '🧬'],
+      plants: ['🧪', '💊', '🔬'],
+      bg: 'from-purple-600 to-indigo-700',
+      title: 'CUARTO AÑO'
+    },
+    'quinto-anio': {
+      animals: ['🧬', '🔬', '⚗️', '🦠'],
+      plants: ['🧪', '💊', '🔬'],
+      bg: 'from-blue-600 to-cyan-700',
+      title: 'QUINTO AÑO'
+    }
+  };
+
+  const config = islandElements[island.id as keyof typeof islandElements] || islandElements['primer-anio'];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 100, scale: 0.8 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 1, delay, type: "spring", stiffness: 100 }}
+      className={`absolute ${position} cursor-pointer transform-gpu`}
+      whileHover={{ scale: 1.05, y: -10 }}
+    >
+      <Link href={island.route}>
+        <div className={`relative w-64 h-48 bg-gradient-to-br ${config.bg} rounded-full shadow-2xl border-4 border-yellow-400/50 overflow-hidden`}>
+          
+          {/* Base de la isla */}
+          <div className="absolute bottom-0 w-full h-16 bg-yellow-600/80 rounded-b-full"></div>
+          
+          {/* Elementos animados */}
+          <div className="absolute inset-0 p-4">
+            
+            {/* Animales que crecen individualmente */}
+            <div className="flex justify-around items-end h-full pb-16">
+              {config.animals.map((animal, idx) => (
+                <motion.div
+                  key={idx}
+                  className="text-3xl"
+                  whileHover={{ 
+                    scale: 1.8, 
+                    y: -15,
+                    rotate: idx % 2 === 0 ? 10 : -10,
+                    zIndex: 50
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  style={{ zIndex: 10 }}
+                >
+                  {animal}
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Plantas que crecen */}
+            <div className="absolute top-4 left-4 right-4 flex justify-between">
+              {config.plants.map((plant, idx) => (
+                <motion.div
+                  key={idx}
+                  className="text-2xl"
+                  whileHover={{ 
+                    scale: 2, 
+                    y: -10,
+                    rotate: idx % 2 === 0 ? 15 : -15
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  {plant}
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Título flotante */}
+            <motion.div 
+              className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
+              whileHover={{ scale: 1.1 }}
+            >
+              <div className="bg-black/50 backdrop-blur-sm rounded-full px-4 py-1">
+                <span className="text-yellow-300 font-bold text-sm">{config.title}</span>
+              </div>
+            </motion.div>
+          </div>
+          
+          {/* Efectos de brillo */}
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-white/20 rounded-full opacity-0"
+            whileHover={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        </div>
+      </Link>
+    </motion.div>
+  );
+};
 
 export default function IndicePage() {
   return (
-    <main className="pt-16 min-h-screen bg-gradient-to-br from-book-navy via-book-navy/95 to-book-navy">
+    <main className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 relative overflow-hidden">
       
-      {/* Hero Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          
-          {/* Título principal */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-16"
-          >
-            <h1 className="book-title text-4xl md:text-5xl lg:text-6xl mb-6 leading-tight">
-              {bookData.index.title}
-            </h1>
-            
-            <div className="flex items-center justify-center mb-8">
-              <div className="w-32 h-0.5 bg-book-gold" />
-              <span className="mx-6 text-book-turquoise text-3xl animate-spin" style={{animationDuration: '10s'}}>🧭</span>
-              <div className="w-32 h-0.5 bg-book-gold" />
-            </div>
-            
-            <p className="book-subtitle text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
-              {bookData.index.subtitle}
-            </p>
-          </motion.div>
-
-          {/* Introducción */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-4xl mx-auto mb-20"
-          >
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-book-gold/20">
-              <span className="text-book-gold text-4xl mx-auto mb-6 block">🗺️</span>
-              <p className="text-white/80 text-lg leading-relaxed">
-                Embárcate en un viaje a través de los primeros cinco años de la 
-                Licenciatura en Biología de la UAQ. Cada isla representa un capítulo 
-                único de esta fascinante historia académica, desde los antecedentes 
-                que dieron origen al programa hasta su consolidación como una 
-                licenciatura de excelencia.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Grid de Islas */}
-      <section className="pb-20">
-        <div className="container mx-auto px-4">
-          
-          {/* Subtítulo de sección */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="book-subtitle text-3xl md:text-4xl mb-4">
-              Explora los Capítulos
-            </h2>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto">
-              Haz clic en cualquier isla para comenzar tu exploración
-            </p>
-          </motion.div>
-
-          {/* Grid de Islas */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {bookData.index.islands.map((island, index) => (
-              <IslandCard
-                key={island.id}
-                island={island}
-                index={index}
-              />
-            ))}
+      {/* Header de navegación flotante */}
+      <div className="fixed top-8 left-8 z-50">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-4"
+        >
+          <Link href="/" className="p-3 bg-yellow-400/20 backdrop-blur-sm rounded-full border border-yellow-400/30 hover:bg-yellow-400/30 transition-all duration-300">
+            <span className="text-yellow-300 text-xl">🏠</span>
+          </Link>
+          <div className="px-6 py-3 bg-slate-800/70 backdrop-blur-sm rounded-full border border-yellow-400/30">
+            <span className="text-yellow-300 font-bold">ÍNDICE</span>
           </div>
+        </motion.div>
+      </div>
 
-          {/* Información adicional */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="text-center mt-20"
+      {/* Controles flotantes superiores derecha */}
+      <div className="fixed top-8 right-8 z-50">
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex items-center gap-4"
+        >
+          <motion.button 
+            className="p-3 bg-slate-800/70 backdrop-blur-sm rounded-full border border-yellow-400/30 hover:bg-yellow-400/20 transition-all duration-300"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <div className="bg-gradient-to-r from-book-turquoise/10 to-book-gold/10 rounded-xl p-8 max-w-4xl mx-auto border border-book-gold/20">
-              <h3 className="book-subtitle text-2xl mb-4">
-                Una Historia de Cinco Años
-              </h3>
-              <p className="text-white/80 leading-relaxed mb-6">
-                Este libro digital documenta meticulosamente cada año de los primeros 
-                cinco años de existencia de la Licenciatura en Biología, desde agosto 
-                de 2001 hasta julio de 2006. Cada capítulo está enriquecido con 
-                fotografías históricas, anécdotas de protagonistas y documentos originales 
-                que dan vida a esta extraordinaria historia académica.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-book-gold mb-2">6</div>
-                  <div className="text-white/70">Capítulos</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-book-turquoise mb-2">5</div>
-                  <div className="text-white/70">Años Documentados</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-book-gold mb-2">∞</div>
-                  <div className="text-white/70">Memorias Preservadas</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            <span className="text-yellow-300 text-xl">▶️</span>
+          </motion.button>
+          <motion.button 
+            className="p-3 bg-slate-800/70 backdrop-blur-sm rounded-full border border-yellow-400/30 hover:bg-yellow-400/20 transition-all duration-300"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-yellow-300 text-xl">☰</span>
+          </motion.button>
+        </motion.div>
+      </div>
 
-      {/* Elementos decorativos de fondo */}
+      {/* Título principal centrado */}
+      <motion.div
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="text-center pt-20 pb-12 relative z-20"
+      >
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-300 mb-4 leading-tight">
+          HISTORIA DOCUMENTADA DE LA CREACIÓN<br />
+          DE LA LICENCIATURA EN BIOLOGÍA
+        </h1>
+        <h2 className="text-xl md:text-2xl text-teal-300 mb-6">
+          EN LA UNIVERSIDAD AUTÓNOMA DE QUERÉTARO<br />
+          Y SU DESARROLLO DURANTE EL PRIMER LUSTRO DE VIDA
+        </h2>
+        <p className="text-lg text-yellow-200 italic">
+          Por el Dr. Carlos Isaac Silva Barrón
+        </p>
+        
+        {/* Botón Prólogo */}
+        <motion.div 
+          className="mt-8"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <Link href="/antecedentes">
+            <motion.button 
+              className="bg-yellow-300/90 hover:bg-yellow-300 text-slate-800 font-bold px-8 py-3 rounded-full text-lg shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              PRÓLOGO
+            </motion.button>
+          </Link>
+        </motion.div>
+      </motion.div>
+
+      {/* Islas flotantes dinámicas */}
+      <div className="absolute inset-0 z-10">
+        <FloatingIsland 
+          island={bookData.index.islands[0]} 
+          position="top-1/3 left-16" 
+          delay={0.8} 
+        />
+        <FloatingIsland 
+          island={bookData.index.islands[1]} 
+          position="top-1/2 right-20" 
+          delay={1.0} 
+        />
+        <FloatingIsland 
+          island={bookData.index.islands[2]} 
+          position="bottom-1/3 left-1/3" 
+          delay={1.2} 
+        />
+        <FloatingIsland 
+          island={bookData.index.islands[3]} 
+          position="bottom-1/4 right-1/3" 
+          delay={1.4} 
+        />
+        <FloatingIsland 
+          island={bookData.index.islands[4]} 
+          position="top-1/4 right-1/2" 
+          delay={1.6} 
+        />
+      </div>
+
+      {/* Efectos de fondo */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-book-gold/3 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-10 w-96 h-96 bg-book-turquoise/3 rounded-full blur-3xl" />
-        <div className="absolute top-2/3 left-1/3 w-48 h-48 bg-book-gold/2 rounded-full blur-2xl" />
+        <div className="absolute top-1/4 left-10 w-64 h-64 bg-yellow-400/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-10 w-96 h-96 bg-teal-400/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-2/3 left-1/3 w-48 h-48 bg-pink-400/5 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }} />
       </div>
     </main>
   );
