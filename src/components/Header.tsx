@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-book-navy/95 backdrop-blur-md border-b border-book-gold/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-slate-800/95 backdrop-blur-md border-b border-yellow-400/20">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           
@@ -44,9 +44,9 @@ const Header = () => {
             
             {/* Home */}
             <Link
-              href="/indice"
-              className="flex items-center justify-center w-10 h-10 bg-book-gold/20 hover:bg-book-gold hover:text-book-navy rounded-full transition-all duration-300 text-book-gold"
-              title="Ir al índice"
+              href="/"
+              className="flex items-center justify-center w-10 h-10 bg-yellow-400/20 hover:bg-yellow-400 hover:text-slate-800 rounded-full transition-all duration-300 text-yellow-400"
+              title="Ir a portada"
             >
               🏠
             </Link>
@@ -54,14 +54,14 @@ const Header = () => {
             {/* Índice */}
             <Link
               href="/indice"
-              className="book-btn book-btn-outline text-sm px-4 py-2 hidden md:inline-flex"
+              className="bg-yellow-400 hover:bg-yellow-300 text-slate-800 text-sm px-4 py-2 rounded-full transition-all duration-300 hidden md:inline-flex font-medium"
             >
               ÍNDICE
             </Link>
 
             {/* Audio Player (futuro) */}
             <button
-              className="flex items-center justify-center w-10 h-10 bg-book-turquoise/20 hover:bg-book-turquoise hover:text-white rounded-full transition-all duration-300 text-book-turquoise"
+              className="flex items-center justify-center w-10 h-10 bg-white/20 hover:bg-white hover:text-slate-800 rounded-full transition-all duration-300 text-white opacity-50"
               title="Reproducir audio (próximamente)"
               disabled
             >
@@ -71,7 +71,7 @@ const Header = () => {
             {/* Imprimir */}
             <button
               onClick={handlePrint}
-              className="flex items-center justify-center w-10 h-10 bg-book-gold/20 hover:bg-book-gold hover:text-book-navy rounded-full transition-all duration-300 text-book-gold hidden md:flex"
+              className="flex items-center justify-center w-10 h-10 bg-green-400/20 hover:bg-green-400 hover:text-slate-800 rounded-full transition-all duration-300 text-green-400 hidden md:flex"
               title="Imprimir página"
             >
               🖨️
@@ -80,7 +80,7 @@ const Header = () => {
             {/* Descargar PDF */}
             <button
               onClick={handleDownloadPDF}
-              className="flex items-center justify-center w-10 h-10 bg-book-turquoise/20 hover:bg-book-turquoise hover:text-white rounded-full transition-all duration-300 text-book-turquoise hidden md:flex"
+              className="flex items-center justify-center w-10 h-10 bg-blue-400/20 hover:bg-blue-400 hover:text-slate-800 rounded-full transition-all duration-300 text-blue-400 hidden md:flex"
               title="Descargar PDF completo"
             >
               📥
@@ -89,10 +89,10 @@ const Header = () => {
 
           {/* Título del libro (centro) */}
           <div className="hidden lg:block text-center flex-1 max-w-md mx-8">
-            <h1 className="text-book-gold font-elegant text-lg font-semibold truncate">
+            <h1 className="text-yellow-300 font-bold text-lg truncate">
               Historia de la Licenciatura en Biología
             </h1>
-            <p className="text-book-turquoise text-sm">
+            <p className="text-white/80 text-sm">
               Universidad Autónoma de Querétaro
             </p>
           </div>
@@ -100,7 +100,7 @@ const Header = () => {
           {/* Menú Hamburguesa */}
           <button
             onClick={toggleMenu}
-            className="flex items-center justify-center w-10 h-10 bg-book-gold/20 hover:bg-book-gold hover:text-book-navy rounded-full transition-all duration-300 text-book-gold"
+            className="flex items-center justify-center w-10 h-10 bg-yellow-400/20 hover:bg-yellow-400 hover:text-slate-800 rounded-full transition-all duration-300 text-yellow-400"
             title="Menú de navegación"
           >
             {isMenuOpen ? '✕' : '☰'}
@@ -108,52 +108,52 @@ const Header = () => {
         </div>
 
         {/* Menú Lateral Desplegable */}
-        <div className={`fixed top-16 right-0 h-screen w-80 bg-book-navy border-l border-book-gold/20 transform transition-transform duration-300 ${
+        <div className={`fixed top-16 right-0 h-screen w-80 bg-slate-800 border-l border-yellow-400/20 shadow-xl transform transition-transform duration-300 ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           
           {/* Header del menú */}
-          <div className="p-6 border-b border-book-gold/20">
-            <h2 className="text-book-gold font-elegant text-xl font-semibold mb-2">
+          <div className="p-6 border-b border-yellow-400/20">
+            <h2 className="text-yellow-300 font-bold text-xl mb-2">
               Navegación
             </h2>
-            <p className="text-book-turquoise text-sm">
+            <p className="text-white/70 text-sm">
               Explora todos los capítulos
             </p>
           </div>
 
           {/* Lista de secciones */}
           <nav className="p-6">
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {bookData.navigation.sections.map((section, index) => (
                 <li key={section.id}>
                   <Link
                     href={section.route}
-                    className="flex items-center space-x-3 text-white hover:text-book-gold transition-colors duration-300 py-2"
+                    className="flex items-center space-x-3 text-white/90 hover:text-yellow-300 hover:bg-yellow-400/10 transition-all duration-300 py-2 px-3 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span className="w-8 h-8 bg-book-gold/20 rounded-full flex items-center justify-center text-book-gold text-sm font-semibold">
+                    <span className="w-8 h-8 bg-yellow-400/20 rounded-full flex items-center justify-center text-yellow-400 text-sm font-semibold">
                       {index + 1}
                     </span>
-                    <span>{section.title}</span>
+                    <span className="text-sm font-medium">{section.title}</span>
                   </Link>
                 </li>
               ))}
             </ul>
 
             {/* Acciones adicionales en mobile */}
-            <div className="mt-8 pt-6 border-t border-book-gold/20 md:hidden">
+            <div className="mt-8 pt-6 border-t border-yellow-400/20 md:hidden">
               <div className="flex space-x-4">
                 <button
                   onClick={handlePrint}
-                  className="flex-1 book-btn book-btn-secondary text-sm py-2"
+                  className="flex-1 bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-lg transition-all duration-300"
                 >
                   <span className="mr-2">🖨️</span>
                   Imprimir
                 </button>
                 <button
                   onClick={handleDownloadPDF}
-                  className="flex-1 book-btn book-btn-primary text-sm py-2"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded-lg transition-all duration-300"
                 >
                   <span className="mr-2">📥</span>
                   PDF

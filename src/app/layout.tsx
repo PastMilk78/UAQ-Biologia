@@ -122,7 +122,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900`}>
         {/* Header solo se oculta en la portada */}
         <div id="header-container">
           <Header />
