@@ -4,6 +4,33 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Fuentes específicas del código fuente HTML */
+@font-face {
+  font-family: 'bodoni-moda';
+  src: url('https://fonts.gstatic.com/s/bodonimoda/v20/aFT67PyzsOwC2RKJ9pJD4GCnFxBAVjJ4P0U.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'helveticaneuew01-65medi';
+  src: url('https://fonts.gstatic.com/s/helveticaneuew01-65medi/v1/jb27oJwCc1wBaGd_9KkS4DVZJnBX5EJNbdI') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'din-next-w01-light';
+  src: url('https://fonts.gstatic.com/s/dinnext/v2/R70djykVROCDTmd5KTgJ.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'wix-madefor-text-v2';
+  src: url('https://fonts.gstatic.com/s/madefor/v2/A_d94a_iWqo7LZhOC72ZW9I.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'madefor-display-bold';
+  src: url('https://fonts.gstatic.com/s/madefor/v2/A_d94a_iWqo7LZhOC72ZW9I.woff2') format('woff2');
+  font-display: swap;
+}
+
 /* Variables CSS para el libro digital */
 :root {
   --book-navy: #002F46;
@@ -391,6 +418,11 @@ body {
 }
 
 /* Efectos de partículas de fondo */
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @keyframes float-slow {
   0%, 100% { 
     transform: translateY(0px) rotate(0deg); 

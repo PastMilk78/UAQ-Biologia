@@ -7,34 +7,34 @@ import { bookData } from '@/data/bookContent';
 const FloatingIsland = ({ island, position, delay }: { island: any, position: string, delay: number }) => {
   const islandElements = {
     'primer-anio': {
-      animals: ['🦁', '🦒', '🐘', '🐊'],
-      plants: ['🌳', '🌿', '🍃'],
-      bg: 'from-green-600 to-green-800',
-      title: 'PRIMER AÑO'
+      animals: ['🦎', '🦗', '🐍', '🐢'],
+      plants: ['🌿', '🌺', '🍃'],
+      bg: 'from-emerald-600 to-green-800',
+      title: 'ISLA MARÍA MADRE'
     },
     'segundo-anio': {
-      animals: ['🌸', '🌺', '🌻', '🌹'],
-      plants: ['🌱', '🌿', '🍀'],
-      bg: 'from-pink-500 to-rose-600',
-      title: 'SEGUNDO AÑO'
+      animals: ['🦋', '🐛', '🦗', '🐞'],
+      plants: ['🌸', '🌺', '🌻'],
+      bg: 'from-sky-500 to-blue-600',
+      title: 'ISLA MARÍA MAGDALENA'
     },
     'tercer-anio': {
-      animals: ['🍄', '🟫', '🌰', '🟤'],
-      plants: ['🌾', '🌿', '🍂'],
-      bg: 'from-amber-600 to-orange-700',
-      title: 'TERCER AÑO'
+      animals: ['🐟', '🦀', '🐠', '🐙'],
+      plants: ['🌊', '🪸', '🌾'],
+      bg: 'from-cyan-600 to-teal-700',
+      title: 'ISLA MARÍA CLEOFAS'
     },
     'cuarto-anio': {
-      animals: ['🦠', '🔬', '⚗️', '🧬'],
-      plants: ['🧪', '💊', '🔬'],
-      bg: 'from-purple-600 to-indigo-700',
-      title: 'CUARTO AÑO'
+      animals: ['🦜', '🕊️', '🦅', '🐦'],
+      plants: ['🌴', '🥥', '🌿'],
+      bg: 'from-orange-500 to-red-600',
+      title: 'ARRECIFE SAN JUANITO'
     },
     'quinto-anio': {
-      animals: ['🧬', '🔬', '⚗️', '🦠'],
-      plants: ['🧪', '💊', '🔬'],
-      bg: 'from-blue-600 to-cyan-700',
-      title: 'QUINTO AÑO'
+      animals: ['🐢', '🦈', '🐳', '🐙'],
+      plants: ['🪸', '🌊', '🌿'],
+      bg: 'from-indigo-600 to-purple-700',
+      title: 'ZONA MARINA PROTEGIDA'
     }
   };
 
@@ -120,7 +120,7 @@ const FloatingIsland = ({ island, position, delay }: { island: any, position: st
 
 export default function IndicePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 relative overflow-hidden">
+    <main className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #080A0B 0%, #1A1E22 50%, #2D3339 100%)' }}>
       
       {/* Header de navegación flotante */}
       <div className="fixed top-8 left-8 z-50">
@@ -172,15 +172,15 @@ export default function IndicePage() {
         className="text-center pt-20 pb-12 relative z-20"
       >
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-300 mb-4 leading-tight">
-          HISTORIA DOCUMENTADA DE LA CREACIÓN<br />
-          DE LA LICENCIATURA EN BIOLOGÍA
+          FAUNA DE LAS ISLAS MARÍAS<br />
+          EXPLORACIÓN DIGITAL
         </h1>
         <h2 className="text-xl md:text-2xl text-teal-300 mb-6">
-          EN LA UNIVERSIDAD AUTÓNOMA DE QUERÉTARO<br />
-          Y SU DESARROLLO DURANTE EL PRIMER LUSTRO DE VIDA
+          BIODIVERSIDAD Y ECOSISTEMAS MARINOS<br />
+          DEL ARCHIPIÉLAGO MEXICANO
         </h2>
         <p className="text-lg text-yellow-200 italic">
-          Por el Dr. Carlos Isaac Silva Barrón
+          Facultad de Ciencias Naturales - UAQ
         </p>
         
         {/* Botón Prólogo */}
@@ -196,7 +196,7 @@ export default function IndicePage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              PRÓLOGO
+              INTRODUCCIÓN
             </motion.button>
           </Link>
         </motion.div>

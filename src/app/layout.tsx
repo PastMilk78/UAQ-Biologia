@@ -19,19 +19,19 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Historia de la Licenciatura en Biología UAQ',
-  description: 'Historia documentada de la creación de la Licenciatura en Biología y su desarrollo durante el primer lustro de existencia - Universidad Autónoma de Querétaro',
+  title: 'Fauna de las Islas Marías | Facultad de Ciencias Naturales - UAQ',
+  description: 'Exploración digital de la biodiversidad y ecosistemas marinos del archipiélago de las Islas Marías - Universidad Autónoma de Querétaro',
   keywords: [
     'UAQ',
     'Universidad Autónoma de Querétaro',
-    'Licenciatura en Biología',
-    'Historia',
-    'Dr. Carlos Isaac Silva Barrón',
-    'Biología',
-    'Educación Superior',
+    'Islas Marías',
+    'Fauna Marina',
+    'Biodiversidad',
+    'Ecosistemas Marinos',
     'Ciencias Naturales',
-    'Libro Digital',
-    'Historia Académica'
+    'Biología Marina',
+    'Archipiélago Mexicano',
+    'Exploración Digital'
   ],
   authors: [{ name: bookData.author }],
   creator: 'UMDesigner',
@@ -42,10 +42,10 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: 'Historia de la Licenciatura en Biología UAQ',
-    description: 'Libro digital interactivo sobre los primeros cinco años de la Licenciatura en Biología de la Universidad Autónoma de Querétaro',
-    url: 'https://historia-biologia-uaq.com',
-    siteName: 'Historia Biología UAQ',
+    title: 'Fauna de las Islas Marías | Facultad de Ciencias Naturales - UAQ',
+    description: 'Exploración digital interactiva de la biodiversidad y ecosistemas marinos del archipiélago de las Islas Marías',
+    url: 'https://fauna-islas-marias-uaq.com',
+    siteName: 'Fauna Islas Marías UAQ',
     locale: 'es_MX',
     type: 'website',
     images: [
@@ -53,14 +53,14 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Historia de la Licenciatura en Biología UAQ',
+        alt: 'Fauna de las Islas Marías - Facultad de Ciencias Naturales UAQ',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Historia de la Licenciatura en Biología UAQ',
-    description: 'Libro digital interactivo sobre los primeros cinco años de la Licenciatura en Biología UAQ',
+    title: 'Fauna de las Islas Marías | Facultad de Ciencias Naturales - UAQ',
+    description: 'Exploración digital interactiva de la biodiversidad marina del archipiélago de las Islas Marías',
     images: ['/og-image.jpg'],
   },
   robots: {
@@ -113,16 +113,16 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 "name": bookData.publisher
               },
               "datePublished": bookData.year,
-              "description": "Historia documentada de la creación de la Licenciatura en Biología y su desarrollo durante el primer lustro de existencia",
+              "description": "Exploración digital de la biodiversidad y ecosistemas marinos del archipiélago de las Islas Marías",
               "inLanguage": "es",
-              "genre": "Academic History",
-              "about": "Historia académica de la Licenciatura en Biología de la Universidad Autónoma de Querétaro"
+              "genre": "Scientific Research",
+              "about": "Biodiversidad marina y ecosistemas del archipiélago de las Islas Marías, México"
             }),
           }}
         />
       </head>
       
-      <body className={`${inter.className} antialiased bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900`}>
+      <body className={`${inter.className} antialiased`} style={{ background: 'linear-gradient(135deg, #080A0B 0%, #1A1E22 50%, #2D3339 100%)' }}>
         {/* Header solo se oculta en la portada */}
         <div id="header-container">
           <Header />
